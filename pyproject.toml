@@ -5,7 +5,12 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12.11"
 dependencies = [
+    "rlgym[rl-sim]>=2.0.1",
     "rlgym-api>=2.0.0",
+    "rlgym-ppo",
     "torch>=2.10.0",
     "torchvision>=0.25.0",
 ]
+
+[tool.uv.sources]
+rlgym-ppo = { git = "https://github.com/AechPro/rlgym-ppo" }
