@@ -315,6 +315,7 @@ dependencies = [
     { name = "rlgym", extra = ["all", "rl-sim"] },
     { name = "rlgym-api" },
     { name = "rlgym-ppo" },
+    { name = "rlgym-sim" },
     { name = "rocketsim" },
     { name = "torch" },
     { name = "torchvision" },
@@ -325,6 +326,7 @@ requires-dist = [
     { name = "rlgym", extras = ["all", "rl-sim"], specifier = ">=2.0.1" },
     { name = "rlgym-api", specifier = ">=2.0.0" },
     { name = "rlgym-ppo", git = "https://github.com/AechPro/rlgym-ppo" },
+    { name = "rlgym-sim", git = "https://github.com/AechPro/rocket-league-gym-sim?rev=main" },
     { name = "rocketsim", specifier = ">=2.2.0" },
     { name = "torch", specifier = ">=2.10.0" },
     { name = "torchvision", specifier = ">=0.25.0" },
@@ -787,6 +789,15 @@ all = [
 ]
 sim = [
     { name = "rocketsim" },
+]
+
+[[package]]
+name = "rlgym-sim"
+version = "1.2.6"
+source = { git = "https://github.com/AechPro/rocket-league-gym-sim?rev=main#a1240530239d6b7671147b4f97e9b5e130d0acce" }
+dependencies = [
+    { name = "gym" },
+    { name = "numpy" },
 ]
 
 [[package]]

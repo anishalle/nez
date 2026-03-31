@@ -1,5 +1,4 @@
 .direnv
 __pycache__
 wandb
-collision_meshes/
 .venv/

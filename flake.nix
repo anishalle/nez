@@ -21,7 +21,6 @@
       {
         devShells.default = pkgs.mkShell {
           buildInputs = [
-            rust
             # uncomment extras as needed:
             # pkgs.rust-analyzer
             # pkgs.cargo-watch
