@@ -352,20 +352,25 @@ def main():
     global _CURRENT_STAGE
     _CURRENT_STAGE = args.stage
 
-    from rlgym_ppo import Learner
-
     # Patch KBHit so it doesn't crash in non-interactive environments (e.g. SLURM)
     import sys
     if not sys.stdin.isatty():
-        from rlgym_ppo.util import kbhit as _kbhit_mod
-
         class _DummyKBHit:
             def set_normal_term(self): pass
             def getch(self): return ''
             def getarrow(self): return 0
             def kbhit(self): return False
 
+        import rlgym_ppo.util.kbhit as _kbhit_mod
         _kbhit_mod.KBHit = _DummyKBHit
+        import rlgym_ppo.util
+        rlgym_ppo.util.KBHit = _DummyKBHit
+
+    from rlgym_ppo import Learner
+    # Patch the already-imported name in the learner module
+    if not sys.stdin.isatty():
+        from rlgym_ppo import learner as _learner_mod
+        _learner_mod.KBHit = _DummyKBHit
 
     n_proc = args.n_proc
     min_inference_size = max(1, int(round(n_proc * 0.9)))
