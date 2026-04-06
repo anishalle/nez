@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH -p dev
+#SBATCH -p normal
 #SBATCH -c 64
 #SBATCH --mem=375G
 #SBATCH --mail-type=END, FAIL
@@ -11,4 +11,4 @@
 set -euo pipefail
 
 source .venv/bin/activate
-python src/example.py
+python src/ssl_bot.py
