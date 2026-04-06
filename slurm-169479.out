@@ -1,0 +1,33 @@
+=== SSL Bot — Stage 1 ===
+  Learning rate: 0.0002
+  Entropy coef:  0.01
+  Processes:     32
+  Checkpoint:    latest
+
+Using device cuda:0
+Initializing processes...
+Received request for env shapes, returning:
+- Observations shape: (89,)
+- Number of actions: 8.0
+- Action space type: 2.0 (Continuous)
+--------------------
+Initializing PPO...
+Trainable Parameters:
+Component  Count     
+--------------------
+Policy     316944    
+Critic     309249    
+--------------------
+Total      626193    
+Current Policy Learning Rate: 0.0002
+Current Critic Learning Rate: 0.0002
+Attempting to create new wandb run...
+Created new wandb run! kg3hxhx0
+Learner successfully initialized!
+
+
+LEARNING LOOP ENCOUNTERED AN ERROR
+
+Saving checkpoint 0...
+Checkpoint 0 saved!
+
