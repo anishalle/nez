@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/work/axa230262/000 me/nez/src/ssl_bot.py", line 381, in <module>
+    main()
+  File "/work/axa230262/000 me/nez/src/ssl_bot.py", line 355, in main
+    learner = Learner(
+              ^^^^^^^^
+  File "/work/axa230262/000 me/nez/.venv/lib/python3.12/site-packages/rlgym_ppo/learner.py", line 136, in __init__
+    obs_space_size, act_space_size, action_space_type = self.agent.init_processes(
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/axa230262/000 me/nez/.venv/lib/python3.12/site-packages/rlgym_ppo/batched_agents/batched_agent_manager.py", line 488, in init_processes
+    p = pickle.dumps(("initialization_data", build_env_fn, collect_metrics_fn))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: Can't get local object 'build_rocketsim_env.<locals>._build'
+slurmstepd-g-04-01: error: *** JOB 169469 ON g-04-01 CANCELLED AT 2026-04-05T20:26:00 ***

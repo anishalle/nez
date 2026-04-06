@@ -1,0 +1,8 @@
+=== SSL Bot — Stage 1 ===
+  Learning rate: 0.0002
+  Entropy coef:  0.01
+  Processes:     32
+  Checkpoint:    latest
+
+Using device cuda:0
+Initializing processes...
