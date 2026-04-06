@@ -1,20 +1,20 @@
 {
-    "cumulative_timesteps": 84246334,
-    "cumulative_model_updates": 5048,
-    "policy_average_reward": 267.39753914384164,
-    "epoch": 1683,
-    "ts_since_last_save": 100066,
+    "cumulative_timesteps": 607228562,
+    "cumulative_model_updates": 36406,
+    "policy_average_reward": 388.0868885491259,
+    "epoch": 12136,
+    "ts_since_last_save": 100054,
     "reward_running_stats": {
         "mean": [
-            4.332521438598633
+            5.941006089439731
         ],
         "var": [
-            45285264.0
+            486467512.18220407
         ],
         "shape": [
             1
         ],
-        "count": 252600
+        "count": 1820700
     },
     "wandb_run_id": "y3mlg0ry",
     "wandb_project": "rlgym-ppo",

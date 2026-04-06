@@ -229,14 +229,14 @@ def get_stage_config(stage: int):
         # Learning to score: introduce goal/ball-to-goal rewards
         rewards = [
             (StrongTouchReward(), 3),
-            (VelocityBallToGoalReward(), 5),
-            (SpeedTowardBallReward(), 2),
-            (FaceBallReward(), 0.5),
+            (VelocityBallToGoalReward(), 10),
+            (SpeedTowardBallReward(), 3),
+            (FaceBallReward(), 1),
             (AggressionBiasGoalReward(aggression_bias=0.2), 20),
             (AirReward(), 0.1),
         ]
         lr = 1e-4
-        ent = 0.005
+        ent = 0.001
 
     elif stage == 3:
         # Middle: aerials, boost management, alignment
