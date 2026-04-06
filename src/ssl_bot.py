@@ -337,7 +337,14 @@ def main():
                         help="Number of parallel environment processes")
     parser.add_argument("--no-wandb", action="store_true",
                         help="Disable W&B logging")
+    parser.add_argument("--render", action="store_true",
+                        help="Enable rlviser visualization (uses 1 process, no wandb)")
     args = parser.parse_args()
+
+    # Render mode: single process, no wandb, just watch the bot play
+    if args.render:
+        args.n_proc = 1
+        args.no_wandb = True
 
     _, lr, ent_coef = get_stage_config(args.stage)
 
@@ -372,6 +379,15 @@ def main():
         from rlgym_ppo import learner as _learner_mod
         _learner_mod.KBHit = _DummyKBHit
 
+    # Patch torch.load to map CUDA checkpoints to CPU when no GPU is available
+    import torch
+    if not torch.cuda.is_available():
+        _original_torch_load = torch.load
+        def _cpu_torch_load(*args, **kwargs):
+            kwargs.setdefault('map_location', 'cpu')
+            return _original_torch_load(*args, **kwargs)
+        torch.load = _cpu_torch_load
+
     n_proc = args.n_proc
     min_inference_size = max(1, int(round(n_proc * 0.9)))
 
@@ -380,6 +396,8 @@ def main():
         n_proc=n_proc,
         min_inference_size=min_inference_size,
         metrics_logger=SSLLogger(),
+        render=args.render,
+        render_delay=0.05 if args.render else 0,
         ppo_batch_size=50_000,
         ts_per_iteration=50_000,
         exp_buffer_size=150_000,
