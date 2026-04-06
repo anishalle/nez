@@ -278,47 +278,49 @@ def get_stage_config(stage: int):
 # Environment Builder
 # ---------------------------------------------------------------------------
 
-def build_rocketsim_env(stage: int):
-    """Returns a factory function (no args) that builds the env for the given stage."""
-    def _build():
-        import rlgym_sim
-        from rlgym_sim.utils.reward_functions import CombinedReward
-        from rlgym_sim.utils.obs_builders import DefaultObs
-        from rlgym_sim.utils.terminal_conditions.common_conditions import (
-            NoTouchTimeoutCondition, GoalScoredCondition,
-        )
-        from rlgym_sim.utils import common_values
-        from rlgym_sim.utils.action_parsers import ContinuousAction
+# Set by main() before Learner is created; read by build_rocketsim_env in each worker.
+_CURRENT_STAGE = 1
 
-        game_tick_rate = 120
-        tick_skip = 8
-        timeout_seconds = 10
-        timeout_ticks = int(round(timeout_seconds * game_tick_rate / tick_skip))
 
-        rewards_and_weights, _, _ = get_stage_config(stage)
-        reward_fns = [r for r, _ in rewards_and_weights]
-        reward_wts = [w for _, w in rewards_and_weights]
+def build_rocketsim_env():
+    """Top-level env factory (no args) — must be picklable for multiprocessing."""
+    import rlgym_sim
+    from rlgym_sim.utils.reward_functions import CombinedReward
+    from rlgym_sim.utils.obs_builders import DefaultObs
+    from rlgym_sim.utils.terminal_conditions.common_conditions import (
+        NoTouchTimeoutCondition, GoalScoredCondition,
+    )
+    from rlgym_sim.utils import common_values
+    from rlgym_sim.utils.action_parsers import ContinuousAction
 
-        env = rlgym_sim.make(
-            tick_skip=tick_skip,
-            team_size=1,
-            spawn_opponents=True,
-            terminal_conditions=[NoTouchTimeoutCondition(timeout_ticks), GoalScoredCondition()],
-            reward_fn=CombinedReward(reward_functions=reward_fns, reward_weights=reward_wts),
-            obs_builder=DefaultObs(
-                pos_coef=np.asarray([
-                    1 / common_values.SIDE_WALL_X,
-                    1 / common_values.BACK_NET_Y,
-                    1 / common_values.CEILING_Z,
-                ]),
-                ang_coef=1 / np.pi,
-                lin_vel_coef=1 / common_values.CAR_MAX_SPEED,
-                ang_vel_coef=1 / common_values.CAR_MAX_ANG_VEL,
-            ),
-            action_parser=ContinuousAction(),
-        )
-        return env
-    return _build
+    game_tick_rate = 120
+    tick_skip = 8
+    timeout_seconds = 10
+    timeout_ticks = int(round(timeout_seconds * game_tick_rate / tick_skip))
+
+    rewards_and_weights, _, _ = get_stage_config(_CURRENT_STAGE)
+    reward_fns = [r for r, _ in rewards_and_weights]
+    reward_wts = [w for _, w in rewards_and_weights]
+
+    env = rlgym_sim.make(
+        tick_skip=tick_skip,
+        team_size=1,
+        spawn_opponents=True,
+        terminal_conditions=[NoTouchTimeoutCondition(timeout_ticks), GoalScoredCondition()],
+        reward_fn=CombinedReward(reward_functions=reward_fns, reward_weights=reward_wts), # pyright: ignore[reportArgumentType]
+        obs_builder=DefaultObs(
+            pos_coef=np.asarray([ # pyright: ignore[reportArgumentType]
+                1 / common_values.SIDE_WALL_X,
+                1 / common_values.BACK_NET_Y,
+                1 / common_values.CEILING_Z,
+            ]),
+            ang_coef=1 / np.pi,
+            lin_vel_coef=1 / common_values.CAR_MAX_SPEED,
+            ang_vel_coef=1 / common_values.CAR_MAX_ANG_VEL,
+        ),
+        action_parser=ContinuousAction(),
+    )
+    return env
 
 
 # ---------------------------------------------------------------------------
@@ -347,13 +349,16 @@ def main():
         print(f"  Checkpoint:    {args.checkpoint}")
     print()
 
+    global _CURRENT_STAGE
+    _CURRENT_STAGE = args.stage
+
     from rlgym_ppo import Learner
 
     n_proc = args.n_proc
     min_inference_size = max(1, int(round(n_proc * 0.9)))
 
     learner = Learner(
-        build_rocketsim_env(args.stage),
+        build_rocketsim_env,
         n_proc=n_proc,
         min_inference_size=min_inference_size,
         metrics_logger=SSLLogger(),
