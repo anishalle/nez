@@ -1,10 +1,11 @@
+wandb: WARNING `start_method` is deprecated and will be removed in a future version of wandb. This setting is currently non-functional and safely ignored.
 wandb: [wandb.login()] Loaded credentials for https://api.wandb.ai from /home/axa230262/.netrc.
 wandb: Currently logged in as: anish-alle11 (anishalle) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
 wandb: WARNING Using a boolean value for 'reinit' is deprecated. Use 'return_previous' or 'finish_previous' instead.
 wandb: Tracking run with wandb version 0.25.0
-wandb: Run data is saved locally in /work/axa230262/000 me/nez/wandb/run-20260405_203102-kg3hxhx0
+wandb: Run data is saved locally in /work/axa230262/000 me/nez/wandb/run-20260405_203449-kg3hxhx0
 wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run rlgym-ppo-run
+wandb: Resuming run rlgym-ppo-run
 wandb: ⭐️ View project at https://wandb.ai/anishalle/rlgym-ppo
 wandb: 🚀 View run at https://wandb.ai/anishalle/rlgym-ppo/runs/kg3hxhx0
 Traceback (most recent call last):
@@ -17,9 +18,9 @@ Traceback (most recent call last):
     self.new_term = termios.tcgetattr(self.fd)
                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
 termios.error: (25, 'Inappropriate ioctl for device')
-wandb: updating run metadata; uploading console lines 0-4
-wandb: uploading summary, console lines 5-17
+wandb: updating run metadata
+wandb: uploading summary, console lines 18-35
 wandb: 🚀 View run rlgym-ppo-run at: https://wandb.ai/anishalle/rlgym-ppo/runs/kg3hxhx0
 wandb: ⭐️ View project at: https://wandb.ai/anishalle/rlgym-ppo
 wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20260405_203102-kg3hxhx0/logs
+wandb: Find logs at: ./wandb/run-20260405_203449-kg3hxhx0/logs

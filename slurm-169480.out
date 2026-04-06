@@ -21,8 +21,13 @@ Critic     309249
 Total      626193    
 Current Policy Learning Rate: 0.0002
 Current Critic Learning Rate: 0.0002
-Attempting to create new wandb run...
-Created new wandb run! kg3hxhx0
+Auto-load path: data/checkpoints/rlgym-ppo-run-1775439023789428214/0
+Loading from checkpoint at data/checkpoints/rlgym-ppo-run-1775439023789428214/0
+LOADED RUNNING STATS FROM JSON | Mean: [0.] | Variance: [0.] | Count: 0
+LOADED RUNNING STATS FROM JSON | Mean: [0.] | Variance: [0.] | Count: 0
+New policy learning rate: 0.0002
+New policy learning rate: 0.0002
+Checkpoint loaded!
 Learner successfully initialized!
 
 
